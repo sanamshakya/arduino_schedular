@@ -14,14 +14,27 @@ byte monthday = 0;
 byte month = 0;
 byte year = 0;
 
-byte task1Hour = 0;
-byte task1Min = 0;
+byte task1HourS = 0;
+byte task1MinS = 0;
+byte task1SecS = 0;
+byte task1HourE = 0;
+byte task1MinE = 0;
+byte task1SecE = 0;
 
-byte task2Hour = 0;
-byte task2Min = 0;
+byte task2HourS = 0;
+byte task2MinS = 0;
+byte task2SecS = 0;
+byte task2HourE = 0;
+byte task2MinE = 0;
+byte task2SecE = 0;
 
-byte task3Hour = 0;
-byte task3Min = 0;
+byte task3HourS = 0;
+byte task3MinS = 0;
+byte task3SecS = 0;
+byte task3HourE = 0;
+byte task3MinE = 0;
+byte task3SecE = 0;
+
 
 void setup() {
   Wire.begin();
@@ -60,44 +73,85 @@ void setup() {
   // This set of functions allows the user to change the date and time
   {
     Serial.read();
-    Serial.print("Enter task1 Hour: ");
-    task1Hour = readByte();
-    Serial.println(task1Hour);
+    Serial.print("Enter task1 Start Time\n");
     
-    Serial.print("Enter task1 Min: ");
-    task1Min = readByte();
-    Serial.println(task1Min);
+    Serial.println("**********************");
+    Serial.print("Enter Hour: ");    
+    task1HourS = readByte();
+    Serial.println(task1HourS);    
+    Serial.print("Enter Min: ");
+    task1MinS = readByte();
+    Serial.println(task1MinS);
+    Serial.print("Enter Sec: ");
+    task1SecS = readByte();
+    Serial.println(task1SecS);
     
-    Serial.print("Enter task2 Hour: ");
-    task2Hour = readByte();
-    Serial.println(task2Hour);
+    Serial.print("Enter task1 Stop Time\n ");
+    Serial.println("**********************");
+    Serial.print("Enter Hour: ");    
+    task1HourE = readByte();
+    Serial.println(task1HourE);    
+    Serial.print("Enter Min: ");
+    task1MinE = readByte();
+    Serial.println(task1MinE);
+    Serial.print("Enter Sec: ");
+    task1SecE = readByte();
+    Serial.println(task1SecE);
     
-    Serial.print("Enter task2 Min: ");
-    task2Min = readByte();
-    Serial.println(task2Min);
     
-    Serial.print("Enter task3 Hour: ");
-    task3Hour = readByte();
-    Serial.println(task3Hour);
+    Serial.print("Enter task2 Start Time\n ");
+    Serial.println("**********************");
+    Serial.print("Enter Hour: ");    
+    task2HourS = readByte();
+    Serial.println(task2HourS);    
+    Serial.print("Enter Min: ");
+    task2MinS = readByte();
+    Serial.println(task2MinS);
+    Serial.print("Enter Sec: ");
+    task2SecS = readByte();
+    Serial.println(task2SecS);
     
-    Serial.print("Enter task3 Min: ");
-    task3Min = readByte();
-    Serial.println(task3Min);
+    Serial.print("Enter task2 Stop Time\n ");
+    Serial.println("**********************");
+    Serial.print("Enter Hour: ");    
+    task2HourE = readByte();
+    Serial.println(task2HourE);    
+    Serial.print("Enter Min: ");
+    task2MinE = readByte();
+    Serial.println(task2MinE);
+    Serial.print("Enter Sec: ");
+    task2SecE = readByte();
+    Serial.println(task2SecE);
     
-    Serial.print("Task 1 Scheduled at ");
-    Serial.print(task1Hour);
-    Serial.print(":");
-    Serial.println(task1Min);
     
-    Serial.print("Task 2 Scheduled at ");
-    Serial.print(task2Hour);
-    Serial.print(":");
-    Serial.println(task2Min);
+    Serial.print("Enter task3 Start Time \n");
+    Serial.println("**********************");
+    Serial.print("Enter Hour: ");    
+    task3HourS = readByte();
+    Serial.println(task3HourS);    
+    Serial.print("Enter Min: ");
+    task3MinS = readByte();
+    Serial.println(task3MinS);
+    Serial.print("Enter Sec: ");
+    task3SecS = readByte();
+    Serial.println(task3SecS);
     
-    Serial.print("Task 3 Scheduled at ");
-    Serial.print(task3Hour);
-    Serial.print(":");
-    Serial.println(task3Min);
+    Serial.print("Enter task3 Stop Time \n");
+    Serial.println("**********************");
+    Serial.print("Enter Hour: ");    
+    task3HourE = readByte();
+    Serial.println(task3HourE);    
+    Serial.print("Enter Min: ");
+    task3MinE = readByte();
+    Serial.println(task3MinE);
+    Serial.print("Enter Sec: ");
+    task3SecE = readByte();
+    Serial.println(task3SecE);
+    
+    
+    
+    
+    
      
   }
  
@@ -108,15 +162,32 @@ void setup() {
 // Continuous function for converting bytes to decimals and vice versa
 void loop() {
   readTime();
-  if ((minute == task1Min) & (hour == task1Hour)){
+  
+  
+   
+  if ((minute == task2MinS) & (hour == task2HourS)){
     digitalWrite(13, HIGH);   // set the LED on 
    }
    
-  if ((minute == task2Min) & (hour == task2Hour)){
+   if ((minute == task2MinE) & (hour == task2HourE)){
     digitalWrite(13, LOW);   // set the LED on 
    }
+   Serial.print("Current time: ");
+   printTime();
+  Serial.println();
+  delay(1000);
   
 }
+
+
+
+
+
+
+
+
+
+
 byte decToBcd(byte val) {
   return ((val/10*16) + (val%10));
 }
