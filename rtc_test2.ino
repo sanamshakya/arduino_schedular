@@ -1,4 +1,7 @@
 #include <Wire.h>
+#include <EEPROM.h>
+
+int addr = 0;
 const int DS1307 = 0x68; // Address of DS1307 see data sheets
 const char* days[] =
 {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
@@ -35,12 +38,30 @@ byte task3HourE = 0;
 byte task3MinE = 0;
 byte task3SecE = 0;
 
+byte task1HourS_Stored, task1MinS_Stored, task1SecS_Stored, task1HourE_Stored, task1MinE_Stored, task1SecE_Stored;
+byte task2HourS_Stored, task2MinS_Stored, task2SecS_Stored, task2HourE_Stored, task2MinE_Stored, task2SecE_Stored;
+byte task3HourS_Stored, task3MinS_Stored, task3SecS_Stored, task3HourE_Stored, task3MinE_Stored, task3SecE_Stored;
+
 
 void setup() {
   Wire.begin();
   Serial.begin(9600);
   delay(2000); // This delay allows the MCU to read the current date and time.
+  pinMode(13, OUTPUT);
+  pinMode(12, OUTPUT);
+  pinMode(11, INPUT);
+  
+  delay(1000);
+  int setting_time=0;
+  
+  digitalWrite(12, HIGH);
+  digitalWrite(11, LOW);
+  setting_time = digitalRead(11); 
+  
  
+  
+  if (setting_time==HIGH){
+  
   Serial.print("The current date and time is: ");
   printTime();
   Serial.println("Please change to newline ending the settings on the lower right of the Serial Monitor");
@@ -62,7 +83,7 @@ void setup() {
   
   // initialize the digital pin as an output.
   // Pin 13 has an LED connected on most Arduino boards:
-  pinMode(13, OUTPUT); 
+  
   
   
   Serial.println("Would you like to set the time for Tasks? Y/N");
@@ -78,24 +99,36 @@ void setup() {
     Serial.println("**********************");
     Serial.print("Enter Hour: ");    
     task1HourS = readByte();
+    EEPROM.write(addr, task1HourS);
+    addr = addr+1;
     Serial.println(task1HourS);    
     Serial.print("Enter Min: ");
     task1MinS = readByte();
+    EEPROM.write(addr, task1MinS);
+    addr = addr+1;
     Serial.println(task1MinS);
     Serial.print("Enter Sec: ");
     task1SecS = readByte();
+    EEPROM.write(addr, task1SecS);
+    addr = addr+1;
     Serial.println(task1SecS);
     
     Serial.print("Enter task1 Stop Time\n ");
     Serial.println("**********************");
     Serial.print("Enter Hour: ");    
     task1HourE = readByte();
+    EEPROM.write(addr, task1HourE);
+    addr = addr+1;
     Serial.println(task1HourE);    
     Serial.print("Enter Min: ");
     task1MinE = readByte();
+    EEPROM.write(addr, task1MinE);
+    addr = addr+1;
     Serial.println(task1MinE);
     Serial.print("Enter Sec: ");
     task1SecE = readByte();
+    EEPROM.write(addr, task1SecE);
+    addr = addr+1;
     Serial.println(task1SecE);
     
     
@@ -103,24 +136,36 @@ void setup() {
     Serial.println("**********************");
     Serial.print("Enter Hour: ");    
     task2HourS = readByte();
+    EEPROM.write(addr, task2HourS);
+    addr = addr+1;
     Serial.println(task2HourS);    
     Serial.print("Enter Min: ");
     task2MinS = readByte();
+    EEPROM.write(addr, task2MinS);
+    addr = addr+1;
     Serial.println(task2MinS);
     Serial.print("Enter Sec: ");
     task2SecS = readByte();
+    EEPROM.write(addr, task2SecS);
+    addr = addr+1;
     Serial.println(task2SecS);
     
     Serial.print("Enter task2 Stop Time\n ");
     Serial.println("**********************");
     Serial.print("Enter Hour: ");    
     task2HourE = readByte();
+    EEPROM.write(addr, task2HourE );
+    addr = addr+1;
     Serial.println(task2HourE);    
     Serial.print("Enter Min: ");
     task2MinE = readByte();
+    EEPROM.write(addr, task2MinE);
+    addr = addr+1;
     Serial.println(task2MinE);
     Serial.print("Enter Sec: ");
     task2SecE = readByte();
+    EEPROM.write(addr, task2SecE );
+    addr = addr+1;
     Serial.println(task2SecE);
     
     
@@ -128,24 +173,36 @@ void setup() {
     Serial.println("**********************");
     Serial.print("Enter Hour: ");    
     task3HourS = readByte();
+    EEPROM.write(addr, task3HourS);
+    addr = addr+1;
     Serial.println(task3HourS);    
     Serial.print("Enter Min: ");
     task3MinS = readByte();
+    EEPROM.write(addr, task3MinS);
+    addr = addr+1;
     Serial.println(task3MinS);
     Serial.print("Enter Sec: ");
     task3SecS = readByte();
+    EEPROM.write(addr, task3SecS);
+    addr = addr+1;
     Serial.println(task3SecS);
     
     Serial.print("Enter task3 Stop Time \n");
     Serial.println("**********************");
     Serial.print("Enter Hour: ");    
     task3HourE = readByte();
+    EEPROM.write(addr, task3HourE);
+    addr = addr+1;
     Serial.println(task3HourE);    
     Serial.print("Enter Min: ");
     task3MinE = readByte();
+    EEPROM.write(addr, task3MinE);
+    addr = addr+1;
     Serial.println(task3MinE);
     Serial.print("Enter Sec: ");
     task3SecE = readByte();
+    EEPROM.write(addr, task3SecE);
+    addr = addr+1;
     Serial.println(task3SecE);
     
     
@@ -156,14 +213,37 @@ void setup() {
   }
  
   Serial.println("Have a nice day!!!");
+  }
+  
+  int address = 0;
+  task1HourS_Stored=EEPROM.read(address); address = address +1;
+  task1MinS_Stored=EEPROM.read(address); address = address +1;
+  task1SecS_Stored=EEPROM.read(address); address = address +1;
+  task1HourE_Stored=EEPROM.read(address); address = address +1;
+  task1MinE_Stored=EEPROM.read(address); address = address +1;
+  task1SecE_Stored=EEPROM.read(address); address = address +1;
+  
+  task2HourS_Stored=EEPROM.read(address); address = address +1;
+  task2MinS_Stored=EEPROM.read(address); address = address +1;
+  task2SecS_Stored=EEPROM.read(address); address = address +1;
+  task2HourE_Stored=EEPROM.read(address); address = address +1;
+  task2MinE_Stored=EEPROM.read(address); address = address +1;
+  task2SecE_Stored=EEPROM.read(address); address = address +1;
+  
+  task3HourS_Stored=EEPROM.read(address); address = address +1;
+  task3MinS_Stored=EEPROM.read(address); address = address +1;
+  task3SecS_Stored=EEPROM.read(address); address = address +1;
+  task3HourE_Stored=EEPROM.read(address); address = address +1;
+  task3MinE_Stored=EEPROM.read(address); address = address +1;
+  task3SecE_Stored=EEPROM.read(address); address = address +1;
+  
   
 }
 
+
 // Continuous function for converting bytes to decimals and vice versa
 void loop() {
-  readTime();
-  
-  
+  readTime(); 
    
   if ((minute == task2MinS) & (hour == task2HourS)){
     digitalWrite(13, HIGH);   // set the LED on 
@@ -172,9 +252,21 @@ void loop() {
    if ((minute == task2MinE) & (hour == task2HourE)){
     digitalWrite(13, LOW);   // set the LED on 
    }
+   Serial.print("*********************************\n");
    Serial.print("Current time: ");
    printTime();
   Serial.println();
+  Serial.print("************Schedules************\n");
+  Serial.print("Task1:"); Serial.print("Starts at ");Serial.print(task1HourS_Stored);Serial.print("hours"); Serial.print(task1MinS_Stored);Serial.print("Minutes\t");
+                          Serial.print("Stops at ");Serial.print(task1HourE_Stored);Serial.print("hours"); Serial.print(task1MinE_Stored);Serial.print("Minutes\n");
+  Serial.print("Task2:"); Serial.print("Starts at ");Serial.print(task2HourS_Stored);Serial.print("hours"); Serial.print(task2MinS_Stored);Serial.print("Minutes\t");
+                          Serial.print("Stops at ");Serial.print(task2HourE_Stored);Serial.print("hours"); Serial.print(task2MinE_Stored);Serial.print("Minutes\n");
+  Serial.print("Task3:"); Serial.print("Starts at ");Serial.print(task3HourS_Stored);Serial.print("hours"); Serial.print(task3MinS_Stored);Serial.print("Minutes\t");
+                          Serial.print("Stops at ");Serial.print(task3HourE_Stored);Serial.print("hours"); Serial.print(task3MinE_Stored);Serial.print("Minutes\n");
+                   
+  
+     
+          
   delay(1000);
   
 }
